@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { reactive } from "vue";
-import Counter from "./components/Counter.vue";
 
 
 interface AppInfo {
