@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { reactive } from "vue";
+import { reactive, ref, onMounted } from "vue";
+import addButton from "./components/addButtons.vue";
 
 
 interface AppInfo {
@@ -8,6 +9,14 @@ interface AppInfo {
 }
 
 
+interface Props {
+    limit: number;
+    alertMessageOnLimit?: string;
+}
+
+const props = withDefaults(defineProps<Props>(),{
+    alertMessageOnLimit: 'can not go higher'
+})
 // const nextCount = computed(() => {
 //   if(count.value !== null)
 //   {
@@ -17,6 +26,18 @@ interface AppInfo {
 //   return null
 // })
 
+const count = ref<number | null>(null)
+
+function addCount(num: number) {
+  if (count.value !== null) {
+    if (count.value >= props.limit) {
+      alert(props.alertMessageOnLimit)
+    }
+    else {
+      count.value += num
+    }
+  }
+}
 
 const info: AppInfo = reactive({
   name: 'Tuhin',
@@ -34,11 +55,12 @@ const info: AppInfo = reactive({
     :limit="10"
   ></Counter>
 
-<!--   optional message
-  <Counter
-    :limit="10"
-    :alert-message-on-limit="'counting limit can not be crossed'"
-  ></Counter> -->
+  <p>Count: {{ count }}</p>
+
+  <addButton>
+    @add-count="addCount"
+    @reset-count="count = 0"
+  </addButton>
 </template>
 
 <style>
