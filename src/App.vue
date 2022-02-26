@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted } from "vue";
-import fetchCount from "./fetchCount";
+import { reactive } from "vue";
+import Counter from "./components/Counter.vue";
 
 
 interface AppInfo {
@@ -8,17 +8,20 @@ interface AppInfo {
   slogan: string,
 }
 
-const count = ref<number | null>(null)
+
+// const nextCount = computed(() => {
+//   if(count.value !== null)
+//   {
+//     return count.value + 1
+//   }
+
+//   return null
+// })
+
 
 const info: AppInfo = reactive({
   name: 'Tuhin',
   slogan: 'Vue with Typescript',
-})
-
-onMounted(() => {
-  fetchCount((initialCount) => {
-    count.value = initialCount
-  })
 })
 
 </script>
@@ -26,7 +29,17 @@ onMounted(() => {
 <template>
   <h1>{{ info.name }}</h1>
   <h2>{{ info.slogan }}</h2>
-  <p>{{ count }}</p>
+
+  
+  <Counter
+    :limit="10"
+  ></Counter>
+
+<!--   optional message
+  <Counter
+    :limit="10"
+    :alert-message-on-limit="'counting limit can not be crossed'"
+  ></Counter> -->
 </template>
 
 <style>
