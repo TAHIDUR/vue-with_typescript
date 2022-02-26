@@ -1,13 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import fetchCount from "../fetchCount";
+import ControlBar from "./ControlBar.vue";
 
-
-
-const emit = defineEmits<{ 
-  (event: 'add-count', num: number): void  
-  (event: 'reset-count'): void 
-}>()
 
 interface Props {
     limit: number;
@@ -30,19 +25,26 @@ onMounted(() => {
 
 
 
+function addCount(num: number) {
+  if (count.value !== null) {
+    if (count.value >= props.limit) {
+      alert(props.alertMessageOnLimit)
+    }
+    else {
+      count.value += num
+    }
+  }
+}
+
 </script>
 
 
 <template>
     <div>
-<!--   
-        <p>{{ count }}</p>
-
-        <p>
-
-            <button @click="addCount(1)">Add</button>
-            <button @click="emit('add-count', 1)">Add</button> -->
-            <!-- <button @click="emit('reset-count')">Reset</button> -->
-        <!-- </p> --> 
+      <p>{{ count }}</p>
+      <ControlBar 
+        @add-count="addCount"
+        @reset-count="count = 0"
+      ></ControlBar>
     </div>
 </template>
