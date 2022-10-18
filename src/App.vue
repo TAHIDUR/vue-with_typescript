@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive, ref, onMounted } from "vue";
-import Counte from "./components/Counter.vue"
+import Counter from "./components/Counter.vue"
 
 
 interface AppInfo {
@@ -30,10 +30,10 @@ const info: AppInfo = reactive({
   <h1>{{ info.name }}</h1>
   <h2>{{ info.slogan }}</h2>
 
-  <Counte
+  <Counter
     :limit="10"
   >
-  </Counte>
+  </Counter>
 </template>
 
 <style>
